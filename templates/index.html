@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Automated File Organizer</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>📁 Automated File Organizer</h1>
+        
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+        
+        <form method="POST" action="/">
+            <div class="form-group">
+                <label for="directory_path">Directory Path:</label>
+                <input type="text" id="directory_path" name="directory_path" 
+                       placeholder="Enter full directory path (e.g., C:/Users/Name/Documents)" required>
+            </div>
+            <button type="submit" class="btn">Organize Files</button>
+        </form>
+        
+        {% if plot_data %}
+            <div class="visualization">
+                <h2>📊 File Distribution</h2>
+                <img src="data:image/png;base64,{{ plot_data }}" alt="File Distribution Chart">
+                <p class="directory-info">Organized directory: <code>{{ directory_path }}</code></p>
+            </div>
+        {% endif %}
+        
+        <div class="categories">
+            <h2>📂 Supported File Categories</h2>
+            <div class="category-grid">
+                {% for category, extensions in FILE_CATEGORIES.items() %}
+                    <div class="category-card">
+                        <h3>{{ category }}</h3>
+                        <ul>
+                            {% for ext in extensions %}
+                                <li>{{ ext }}</li>
+                            {% endfor %}
+                            {% if not extensions and category == "Others" %}
+                                <li>All other file types</li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</body>
+</html>
