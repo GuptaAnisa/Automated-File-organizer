@@ -8,7 +8,7 @@ Multiple Category Support: Handles images, documents, videos, audio, archives, a
 
 Safe File Handling: Prevents overwriting existing files
 
-Customizable: Easy to modify categories and add new file types
+Customizable: Easy to modify categories and add new file types.
 
 Cross-Platform: Works on Windows, macOS, and Linux
 
